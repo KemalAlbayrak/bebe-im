@@ -17,16 +17,12 @@ body {
     overflow: hidden;
     font-family: Arial, sans-serif;
     color: white;
+    transition: transform 1.4s ease;
 }
 
-/* ⬇️ SAYFA AŞAĞI KAYMA */
+/* ⬇️ SAYFA BELİRGİN AŞAĞI KAYMA */
 body.shift-down {
-    animation: shiftDown 1.2s ease forwards;
-}
-@keyframes shiftDown {
-    to {
-        transform: translateY(-80px);
-    }
+    transform: translateY(-620px);
 }
 
 /* ÜST YAZI */
@@ -75,9 +71,6 @@ body.shift-down {
 .buttons {
     margin-top: 20px;
     z-index: 5;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 button {
     padding: 15px 25px;
@@ -90,21 +83,11 @@ button {
 .yes { background: #ff4d6d; color: white; }
 .no { background: #555; color: white; }
 
-/* DANS */
-.dance {
-    animation: dance 0.4s infinite alternate;
-}
-@keyframes dance {
-    from { transform: rotate(-12deg) scale(1.3); }
-    to { transform: rotate(12deg) scale(1.4); }
-}
-
 /* MESAJ */
 .message {
     font-size: 40px;
     margin-top: 15px;
     z-index: 5;
-    text-align: center;
 }
 
 /* KONFETİ */
@@ -122,23 +105,23 @@ button {
     }
 }
 
-/* 🎁 KUTU */
+/* 🎁 KUTU – ALTTAN GELİR */
 .box {
     display: none;
-    position: absolute;
-    bottom: -200px;
-    left: 20px;
+    position: fixed;
+    bottom: -920px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 160px;
     height: 120px;
     background: #ff4d6d;
     border-radius: 10px;
     cursor: pointer;
-    z-index: 6;
-    animation: slideUp 1.8s ease forwards;
-    overflow: visible;
+    z-index: 30;
+    animation: boxUp 1.8s ease forwards;
 }
-@keyframes slideUp {
-    to { bottom: 120px; }
+@keyframes boxUp {
+    to { bottom: -280px; }
 }
 
 /* kapak */
@@ -199,7 +182,7 @@ button {
 }
 @keyframes rise {
     to {
-        transform: translateX(-50%) translateY(-140px);
+        transform: translateX(-50%) translateY(-160px);
         opacity: 1;
     }
 }
@@ -211,7 +194,7 @@ button {
     height: 10px;
     border-radius: 50%;
     animation: explode 1s forwards;
-    z-index: 30;
+    z-index: 40;
 }
 @keyframes explode {
     to {
@@ -271,16 +254,13 @@ const hiddenMessage = document.getElementById("hiddenMessage");
 
 function ok() {
     document.body.classList.add("shift-down");
-    heart.className = "heart dance";
-    ekgPath.style.animationDuration = "0.6s";
     message.innerHTML = "OLLEEEEY 🎉💖";
     box.style.display = "block";
     bigConfettiRain();
 }
 
 function notOk() {
-    heart.className = "heart";
-    ekgPath.style.animationDuration = "4s";
+    document.body.classList.remove("shift-down");
     message.innerHTML = "Geçecek bebeğim 🤍";
     box.style.display = "none";
     hiddenMessage.classList.remove("show-message");
@@ -300,7 +280,6 @@ function bigConfettiRain(count = 300) {
         c.style.background = `hsl(${Math.random()*360},100%,50%)`;
         c.style.setProperty("--x", `${Math.random()*600-300}px`);
         c.style.setProperty("--r", `${Math.random()*1440}deg`);
-        c.style.animationDuration = (Math.random()*3+4)+"s";
         document.body.appendChild(c);
         setTimeout(()=>c.remove(),7000);
     }
@@ -310,7 +289,7 @@ function fireworks() {
     for (let i = 0; i < 60; i++) {
         const f = document.createElement("div");
         f.className = "firework";
-        f.style.left = "120px";
+        f.style.left = "50%";
         f.style.top = "70%";
         f.style.background = `hsl(${Math.random()*360},100%,50%)`;
         f.style.setProperty("--x", `${Math.random()*400-200}px`);
