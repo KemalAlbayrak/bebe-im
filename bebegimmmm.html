@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bebeğim</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #050505;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* ÜST YAZI */
+.love-text {
+    position: absolute;
+    top: 20px;
+    font-size: 34px;
+    color: #ff4d6d;
+    text-shadow: 0 0 10px red;
+    z-index: 10;
+    text-align: center;
+    padding: 0 10px;
+}
+
+/* EKG */
+.ekg {
+    position: absolute;
+    top: 80px;
+    width: 100%;
+    height: 120px;
+}
+.ekg path {
+    fill: none;
+    stroke: #00ff99;
+    stroke-width: 3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: ekgMove 2s linear infinite;
+}
+@keyframes ekgMove {
+    to { stroke-dashoffset: 0; }
+}
+
+/* KALP */
+.heart {
+    font-size: 150px;
+    animation: beat 1s infinite;
+    z-index: 5;
+}
+@keyframes beat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+}
+
+/* BUTONLAR */
+.buttons {
+    margin-top: 20px;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    margin: 10px;
+    cursor: pointer;
+}
+.yes { background: #ff4d6d; color: white; }
+.no { background: #555; color: white; }
+
+/* DANS */
+.dance {
+    animation: dance 0.4s infinite alternate;
+}
+@keyframes dance {
+    from { transform: rotate(-12deg) scale(1.3); }
+    to { transform: rotate(12deg) scale(1.4); }
+}
+
+/* MESAJ */
+.message {
+    font-size: 40px;
+    margin-top: 15px;
+    z-index: 5;
+    text-align: center;
+}
+
+/* KONFETİ */
+.confetti {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    animation: fall 6s linear forwards;
+    z-index: 20;
+}
+@keyframes fall {
+    to {
+        transform: translateY(120vh) translateX(var(--x)) rotate(var(--r));
+        opacity: 0;
+    }
+}
+
+/* 🎁 KUTU */
+.box {
+    display: none;
+    position: absolute;
+    bottom: 120px;
+    left: -220px;
+    width: 160px;
+    height: 120px;
+    background: #ff4d6d;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 6;
+    animation: slideIn 2s forwards;
+    overflow: visible;
+}
+@keyframes slideIn {
+    to { left: 20px; }
+}
+
+/* kapak */
+.box::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    height: 35px;
+    background: #ff6f91;
+    border-radius: 10px 10px 0 0;
+}
+
+/* şerit */
+.ribbon-v {
+    position: absolute;
+    left: 50%;
+    width: 20px;
+    height: 100%;
+    background: white;
+    transform: translateX(-50%);
+}
+.ribbon-h {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 20px;
+    background: white;
+    transform: translateY(-50%);
+}
+
+/* kutu alt yazı */
+.box-text {
+    position: absolute;
+    bottom: -35px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* gizli mesaj */
+.hidden-message {
+    position: absolute;
+    bottom: 20px;
+    width: 90vw;
+    max-width: 320px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    font-size: 34px;
+    text-align: center;
+    color: #ffb3c6;
+    text-shadow: 0 0 15px pink;
+    opacity: 0;
+    pointer-events: none;
+}
+.show-message {
+    animation: rise 1.4s ease-out forwards;
+}
+@keyframes rise {
+    to {
+        transform: translateX(-50%) translateY(-140px);
+        opacity: 1;
+    }
+}
+
+/* 🎆 HAVAİ FİŞEK */
+.firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: explode 1s forwards;
+    z-index: 30;
+}
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+    }
+}
+
+/* 📱 MOBİL ÖZEL */
+@media (max-width: 600px) {
+    .love-text { font-size: 24px; }
+    .heart { font-size: 110px; }
+    .message { font-size: 28px; }
+    .hidden-message { font-size: 22px; }
+    button { font-size: 16px; padding: 12px 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="love-text">SENİ ÇOOOOOOOOOOOOOOOOOK SEVİYORUM YAVRUMMM ❤️</div>
+
+<svg class="ekg" viewBox="0 0 1000 120">
+<path id="ekgPath"
+d="M0 60 L100 60 L140 60 L160 20 L180 100 L200 60 L260 60 L300 30 L330 90 L360 60 L460 60 L1000 60"/>
+</svg>
+
+<h1>Bebeğim iyileşmiş mi?</h1>
+
+<div class="heart" id="heart">❤️</div>
+
+<div class="buttons">
+    <button class="no" onclick="notOk()">Henüz değil 😢</button>
+    <button class="yes" onclick="ok()">İyileştim 💖</button>
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="box" id="box" onclick="openBox()">
+    <div class="ribbon-v"></div>
+    <div class="ribbon-h"></div>
+    <div class="box-text">Buraya tıkla yavrum</div>
+
+    <div class="hidden-message" id="hiddenMessage">
+        EVRENİN EN MUTLUSUYUM<br>
+        ŞU ANDA<br>
+        UYUYORSAM BİLE 💖
+    </div>
+</div>
+
+<script>
+const heart = document.getElementById("heart");
+const ekgPath = document.getElementById("ekgPath");
+const message = document.getElementById("message");
+const box = document.getElementById("box");
+const hiddenMessage = document.getElementById("hiddenMessage");
+
+function ok() {
+    heart.className = "heart dance";
+    ekgPath.style.animationDuration = "0.6s";
+    message.innerHTML = "OLLEEEEY 🎉💖";
+    box.style.display = "block";
+    bigConfettiRain();
+}
+
+function notOk() {
+    heart.className = "heart";
+    ekgPath.style.animationDuration = "4s";
+    message.innerHTML = "Geçecek bebeğim 🤍";
+    box.style.display = "none";
+    hiddenMessage.classList.remove("show-message");
+}
+
+function openBox() {
+    hiddenMessage.classList.add("show-message");
+    fireworks();
+}
+
+function bigConfettiRain(count = 300) {
+    for (let i = 0; i < count; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.top = Math.random() * -300 + "px";
+        c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.setProperty("--x", `${Math.random()*600-300}px`);
+        c.style.setProperty("--r", `${Math.random()*1440}deg`);
+        c.style.animationDuration = (Math.random()*3+4)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),7000);
+    }
+}
+
+function fireworks() {
+    for (let i = 0; i < 60; i++) {
+        const f = document.createElement("div");
+        f.className = "firework";
+        f.style.left = "120px";
+        f.style.top = "70%";
+        f.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        f.style.setProperty("--x", `${Math.random()*400-200}px`);
+        f.style.setProperty("--y", `${Math.random()*400-200}px`);
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),1000);
+    }
+}
+</script>
+
+</body>
+</html>
